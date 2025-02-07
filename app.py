@@ -28,13 +28,23 @@ def index():
 
     today = datetime.now().date()
     total_price = sum(item[3] for item in items)
-    total_mean = sum((item[3] / (today - datetime.strptime(item[2], '%Y-%m-%d').date()).days) if (
-                                                                                                             today - datetime.strptime(
-                                                                                                         item[2],
-                                                                                                         '%Y-%m-%d').date()).days > 0 else 0
-                     for item in items)
 
-    return render_template("index.html", items=items, total_price=total_price, total_mean=total_mean)
+    # Build a new list of items that includes the mean price per day
+    items_with_mean = []
+    for item in items:
+        item_id, name, bought_date, price = item
+        # Convert the bought_date string to a date object
+        date_obj = datetime.strptime(bought_date, '%Y-%m-%d').date()
+        # Calculate the number of days since the item was bought
+        days_diff = (today - date_obj).days
+        # Avoid division by zero: if no days have passed, set mean to 0.
+        mean_price_per_day = price / days_diff if days_diff > 0 else 0
+        items_with_mean.append((item_id, name, bought_date, price, mean_price_per_day))
+
+    # Optionally, you can also calculate a total mean across all items:
+    total_mean = sum(item[4] for item in items_with_mean)
+
+    return render_template("index.html", items=items_with_mean, total_price=total_price, total_mean=total_mean)
 
 
 @app.route('/add', methods=['POST'])

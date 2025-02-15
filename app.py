@@ -137,17 +137,24 @@ def plot():
         future_means.append(daily_total)
         d += timedelta(days=1)
 
-    # 绘图：历史部分用蓝色，未来部分用红色；在今天处加一条虚线标识
+    # 设置y轴的对数刻度，以增强低值的可视化效果
     fig, ax = plt.subplots(figsize=(10, 5))
     if past_dates:
         ax.plot(past_dates, past_means, color='blue', label='Historical Mean Price/Day')
     if future_dates:
         ax.plot(future_dates, future_means, color='red', label='Predicted Future Mean Price/Day')
+
+    # 画今天的虚线
     ax.axvline(today, color='green', linestyle='--', label='Today')
 
+    # 设置标题和标签
     ax.set_title("Historical & Future Predicted Mean Price/Day")
     ax.set_xlabel("Date")
     ax.set_ylabel("Total Mean Price/Day")
+
+    # 使用对数刻度
+    ax.set_yscale('log')
+
     ax.xaxis.set_major_formatter(DateFormatter("%Y-%m-%d"))
     fig.autofmt_xdate()
     ax.legend()
@@ -158,6 +165,7 @@ def plot():
     plt.close(fig)
     buf.seek(0)
     return Response(buf.getvalue(), mimetype='image/png')
+
 
 
 if __name__ == '__main__':

@@ -4,5 +4,11 @@
 
 ## 🚀 快速启动  
 
-确保您的系统已安装 **Python 3**，然后运行app.py即可。 
+确保您的系统已安装 **Python 3**，然后运行app.py即可。 (一些库pip安装即可)
+
+## 效果
+
+![Image Alt Text](https://github.com/chang-zy/ThingsManager/blob/master/Screenshot%202025-02-15%20at%2014.02.41.png?raw=true)
+
+![https://github.com/chang-zy/ThingsManager/blob/master/Screenshot%202025-02-15%20at%2014.02.41.png](https://github.com/chang-zy/ThingsManager/blob/master/Screenshot%202025-02-15%20at%2014.02.46.png)
 
